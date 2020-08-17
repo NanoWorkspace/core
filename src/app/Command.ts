@@ -2,14 +2,14 @@ import Discord from "discord.js"
 
 export default interface Command {
   name: string
-  alias?: (string | RegExp)[]
+  aliases?: (string | RegExp)[]
   owner?: boolean
   admin?: boolean
   permissions?: Discord.PermissionResolvable[]
   roles?: Discord.RoleResolvable[]
   users?: Discord.UserResolvable[]
   members?: Discord.GuildMemberResolvable[]
-  channels?: Discord.ChannelResolvable[]
+  channels?: Discord.GuildChannelResolvable[]
   channelType?: "dm" | "guild"
   cooldown?: number
   typing?: boolean
@@ -21,7 +21,6 @@ export default interface Command {
 
 export interface CommandEvent {
   message: Discord.Message
-  commands: Discord.Collection<string, Command>
   arguments: { [name: string]: any }
 }
 

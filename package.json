@@ -13,7 +13,7 @@
   "scripts": {
     "prettier": "prettier src --write",
     "build": "npm run prettier && tsc",
-    "start": "npm run build && node ."
+    "start": "npm run build && node --trace-warnings ."
   },
   "keywords": [],
   "author": "ghom",

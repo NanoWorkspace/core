@@ -2,8 +2,12 @@ import Discord from "discord.js"
 import { promises as fs } from "fs"
 import { join } from "path"
 import Command, { CommandEvent } from "./app/Command"
+import resolveCommand from "./utils/resolveCommand"
+import { commands } from "./utils/globals"
 
 const TOKEN: string = require("../TOKEN.json")
+
+const wait = (time: number) => new Promise((r) => setTimeout(r, time))
 
 const client = new Discord.Client({
   disableMentions: "everyone",
@@ -12,11 +16,11 @@ const client = new Discord.Client({
 ;(async () => {
   const commandNames = await fs.readdir(join(__dirname, "commands"))
 
-  const commands = new Discord.Collection<string, Command>(
-    commandNames.map((commandName) => [
+  commandNames.forEach((commandName) =>
+    commands.set(
       commandName.slice(commandName.lastIndexOf(".")),
-      require(join(__dirname, "commands", commandName)),
-    ])
+      require(join(__dirname, "commands", commandName))
+    )
   )
 
   await client.login(TOKEN)
@@ -34,42 +38,27 @@ const client = new Discord.Client({
 
     // webhook filter
     if (message.webhookID) {
+      // waiting embed loading
+      await wait(5000)
+
       // twitter
       if (message.content.startsWith("http://twitter.com")) {
         const embed = message.embeds[0]
-        if (/^@\S+/.test(embed.description || "")) {
-          message
-            .delete()
-            .catch(console.error)
-            .then(() => {
-              message.channel.send(
-                "Actualité indésirable effacée. ```json\n" +
-                  message.toJSON() +
-                  "\n```"
-              )
-            })
+
+        if (!embed || /^@\S+/.test(embed.description || "")) {
+          await message.delete()
         }
       }
       return
     }
 
     // command handler test
-    const command = commands.find(
-      (c) =>
-        !!(
-          message.content.startsWith(c.name) ||
-          c.alias?.some((alias) => {
-            if (typeof alias === "string") message.content.startsWith(alias)
-            else alias.test(message.content)
-          })
-        )
-    )
+    const command = resolveCommand(message.content)
     if (!command) return
 
     // prepare command event
     const commandEvent: CommandEvent = {
       message,
-      commands,
       arguments: {},
     }
 
@@ -83,12 +72,15 @@ const client = new Discord.Client({
 
     // check filters
     if (message.guild) {
-      if (command.channelType === "dm") return
+      if (command.channelType === "dm")
+        return message.channel.send("❌ Utilisable seulement dans un serveur")
       if (command.owner) {
-        if (message.member !== message.guild.owner) return
+        if (message.member !== message.guild.owner)
+          return message.channel.send("❌ Utilisable seulement par un owner")
       }
       if (command.admin) {
-        if (!message.member?.hasPermission("ADMINISTRATOR")) return
+        if (!message.member?.hasPermission("ADMINISTRATOR"))
+          return message.channel.send("❌ Utilisable seulement par un admin")
       }
       if (command.channels) {
         if (
@@ -96,7 +88,14 @@ const client = new Discord.Client({
             return client.channels.resolve(channel) !== message.channel
           })
         )
-          return
+          return message.channel.send(
+            "❌ Utilisable seulement dans les salons suivants:\n" +
+              command.channels
+                .map((channel) => {
+                  return `<#${message.guild?.channels.resolveID(channel)}>`
+                })
+                .join("\n")
+          )
       }
       if (command.members) {
         if (
@@ -104,7 +103,14 @@ const client = new Discord.Client({
             return message.guild?.members.resolve(member) !== message.member
           })
         )
-          return
+          return message.channel.send(
+            "❌ Utilisable seulement par les membres suivants:\n" +
+              command.members
+                .map((member) => {
+                  return message.guild?.members.resolve(member)?.displayName
+                })
+                .join("\n")
+          )
       }
       if (command.permissions) {
         if (
@@ -112,7 +118,10 @@ const client = new Discord.Client({
             return message.member?.permissions.missing(permission)
           })
         )
-          return
+          return message.channel.send(
+            "❌ Utilisable seulement avec les permissions suivantes:\n" +
+              command.permissions.join("\n")
+          )
       }
       if (command.roles) {
         if (
@@ -120,10 +129,18 @@ const client = new Discord.Client({
             return message.member?.roles.resolve(role)
           })
         )
-          return
+          return message.channel.send(
+            "❌ Utilisable seulement avec les rôles suivants:\n" +
+              command.roles
+                .map((role) => {
+                  return message.guild?.roles.resolve(role)?.name
+                })
+                .join("\n")
+          )
       }
     } else {
-      if (command.channelType === "guild") return
+      if (command.channelType === "guild")
+        return message.channel.send("❌ Utilisable seulement en DM")
     }
     if (command.users) {
       if (
@@ -137,7 +154,7 @@ const client = new Discord.Client({
     // todo: manage command.cooldown and command.typing
 
     // launch command
-    command.call(commandEvent)
+    await command.call(commandEvent)
   })
 })().catch((error) => {
   throw error
