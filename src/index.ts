@@ -3,7 +3,7 @@ import { promises as fs } from "fs"
 import { join } from "path"
 import Command, { CommandEvent } from "./app/Command"
 import resolveCommand from "./utils/resolveCommand"
-import { commands } from "./utils/globals"
+import { commands, db } from "./utils/globals"
 
 const TOKEN: string = require("../TOKEN.json")
 
@@ -18,7 +18,7 @@ const client = new Discord.Client({
 
   commandNames.forEach((commandName) =>
     commands.set(
-      commandName.slice(commandName.lastIndexOf(".")),
+      commandName.slice(0, commandName.lastIndexOf(".")),
       require(join(__dirname, "commands", commandName))
     )
   )
@@ -26,6 +26,8 @@ const client = new Discord.Client({
   await client.login(TOKEN)
 
   client.once("ready", () => {
+    console.table(db.get("authorizedTwitterUsers"))
+    console.table(commands)
     console.table(
       client.guilds.cache.mapValues((guild) => {
         return guild.name
@@ -46,6 +48,18 @@ const client = new Discord.Client({
         const embed = message.embeds[0]
 
         if (!embed || /^@\S+/.test(embed.description || "")) {
+          await message.delete()
+        } else if (embed.author) {
+          const tweetUserMatch = /\(@(.+)\)/.exec(String(embed.author.name))
+          const tweetUser = tweetUserMatch ? tweetUserMatch[1] : "none"
+          if (
+            !db
+              .get("authorizedTwitterUsers")
+              .some((user: string) => user === tweetUser)
+          ) {
+            await message.delete()
+          }
+        } else {
           await message.delete()
         }
       }
