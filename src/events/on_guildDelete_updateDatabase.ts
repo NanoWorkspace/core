@@ -1,6 +1,6 @@
-import { Guild } from "discord.js"
-import { db } from "../utils/globals"
+import Discord from "discord.js"
+import Globals from "../app/Globals"
 
-module.exports = (guild: Guild) => {
-  db.delete("prefix", `guilds.${guild.id}`)
+module.exports = (guild: Discord.Guild) => {
+  Globals.db.delete("prefix", `guilds.${guild.id}`)
 }

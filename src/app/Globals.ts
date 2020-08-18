@@ -1,6 +1,6 @@
 import Discord from "discord.js"
 import Enmap from "enmap"
-import Command from "../app/Command"
+import Command from "./Command"
 import fs from "fs"
 import { join } from "path"
 
@@ -39,3 +39,10 @@ fs.readdirSync(join(__dirname, "..", "events")).forEach((fileName) => {
   )
   events.push(eventInfo)
 })
+
+export default {
+  db,
+  commands,
+  client,
+  events,
+}

@@ -1,14 +1,14 @@
-import { db, commands, client, events } from "../utils/globals"
+import Globals from "../app/Globals"
 
 module.exports = () => {
   console.log("EVENTS")
-  console.table(events)
+  console.table(Globals.events)
   console.log("COMMANDS")
-  console.table(commands.keyArray())
+  console.table(Globals.commands.keyArray())
   console.log("GUILDS")
   console.table(
-    client.guilds.cache.mapValues((guild) => {
-      db.ensure("prefix", "nano ", `guilds.${guild.id}`)
+    Globals.client.guilds.cache.mapValues((guild) => {
+      Globals.db.ensure("prefix", "nano ", `guilds.${guild.id}`)
       return guild.name
     })
   )

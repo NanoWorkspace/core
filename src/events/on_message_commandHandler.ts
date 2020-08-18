@@ -1,8 +1,8 @@
-import { Message } from "discord.js"
-import { client, db } from "../utils/globals"
+import Discord from "discord.js"
+import Globals from "../app/Globals"
 import { resolveCommand } from "../app/Command"
 
-module.exports = async (message: Message) => {
+module.exports = async (message: Discord.Message) => {
   if (
     message.system ||
     !message.author ||
@@ -15,7 +15,7 @@ module.exports = async (message: Message) => {
   let prefix = "nano ",
     content
   if (message.guild) {
-    prefix = db.get("prefix", `guilds.${message.guild.id}`)
+    prefix = Globals.db.get("prefix", `guilds.${message.guild.id}`)
   }
   if (message.content.startsWith(prefix)) {
     content = message.content.replace(prefix, "").trim()
@@ -53,7 +53,7 @@ module.exports = async (message: Message) => {
     if (command.channels) {
       if (
         command.channels.every((channel) => {
-          return client.channels.resolve(channel) !== message.channel
+          return Globals.client.channels.resolve(channel) !== message.channel
         })
       )
         return message.channel.send(
@@ -113,14 +113,14 @@ module.exports = async (message: Message) => {
   if (command.users) {
     if (
       command.users.every((user) => {
-        return client.users.resolve(user) !== message.author
+        return Globals.client.users.resolve(user) !== message.author
       })
     )
       return message.channel.send(
         "❌ Utilisable seulement par les utilisateurs suivants:\n" +
           command.users
             .map((user) => {
-              return client.users.resolve(user)?.username
+              return Globals.client.users.resolve(user)?.username
             })
             .join("\n")
       )

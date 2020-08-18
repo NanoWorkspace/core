@@ -1,5 +1,5 @@
 import Discord from "discord.js"
-import { commands } from "../utils/globals"
+import Globals from "./Globals"
 
 export default interface Command {
   name?: string
@@ -30,7 +30,7 @@ export type CommandArgument = (
 ) => Promise<{ arg: any; rest: string }> | { arg: any; rest?: string }
 
 export const resolveCommand = (resolvable: string) => {
-  let command = commands.find((c) => c.regex.test(resolvable))
+  let command = Globals.commands.find((c) => c.regex.test(resolvable))
   if (command)
     return { command, rest: resolvable.replace(command.regex, "").trim() }
   return { command: null }

@@ -1,7 +1,7 @@
-import { MessageEmbed } from "discord.js"
+import Discord from "discord.js"
 import Command from "../app/Command"
-import * as ArgTypes from "../utils/argTypes"
-import { db } from "../utils/globals"
+import Types from "../app/ArgumentTypes"
+import Globals from "../app/Globals"
 
 const prefix: Command = {
   regex: /pr[eé]fix/i,
@@ -9,10 +9,10 @@ const prefix: Command = {
   channelType: "guild",
   admin: true,
   channels: ["717070722945646663"],
-  args: { newPrefix: ArgTypes.Text },
+  args: { newPrefix: Types.text },
   call: ({ message, args: { newPrefix } }) => {
-    db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)
-    const embed = new MessageEmbed()
+    Globals.db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)
+    const embed = new Discord.MessageEmbed()
       .setTitle(`Le prefix de Nano sur ce serveur a bien été modifié.`)
       .setDescription(`Nouveau prefix: \`${newPrefix}\``)
     message.channel.send(embed).catch(console.error)

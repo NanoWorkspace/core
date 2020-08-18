@@ -1,12 +1,12 @@
 import Command from "../app/Command"
-import { Text } from "../utils/argTypes"
-import * as text from "../utils/text"
+import Types from "../app/ArgumentTypes"
+import text from "../utils/text"
 
 const evalCommand: Command = {
   regex: /eval|js/i,
   description: "Exécute un bout de code en back-end.",
   users: ["352176756922253321"],
-  args: { code: Text },
+  args: { code: Types.text },
   call: async ({ message, args: { code } }) => {
     const { guild, channel, client } = message
 

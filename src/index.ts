@@ -1,4 +1,4 @@
-import { client } from "./utils/globals"
+import { client } from "./app/Globals"
 
 const TOKEN: string = require("../TOKEN.json")
 

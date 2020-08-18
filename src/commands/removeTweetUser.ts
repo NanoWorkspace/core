@@ -1,7 +1,7 @@
 import Command from "../app/Command"
-import { MessageEmbed } from "discord.js"
-import { db } from "../utils/globals"
-import * as ArgTypes from "../utils/argTypes"
+import Discord from "discord.js"
+import Globals from "../app/Globals"
+import Types from "../app/ArgumentTypes"
 
 const addTweetUser: Command = {
   regex: /removetw(?:eet|itter)user|rtu/i,
@@ -10,14 +10,14 @@ const addTweetUser: Command = {
   description:
     "Retire un utilisateur twitter de la liste d'utilisateurs autorisés.",
   channelType: "guild",
-  args: { user: ArgTypes.Text },
+  args: { user: Types.text },
   call: ({ message, args: { user } }) => {
-    const embed = new MessageEmbed()
+    const embed = new Discord.MessageEmbed()
 
     if (!user) {
       embed.setTitle("Argument manquant.")
     } else {
-      db.remove("authorizedTwitterUsers", user)
+      Globals.db.remove("authorizedTwitterUsers", user)
       embed
         .setTitle("Utilisateur retiré.")
         .setDescription(`Utilisateur: \`${user}\``)

@@ -1,20 +1,20 @@
 import Command from "../app/Command"
-import { MessageEmbed } from "discord.js"
-import { commands } from "../utils/globals"
-import * as ArgTypes from "../utils/argTypes"
+import Discord from "discord.js"
+import Globals from "../app/Globals"
+import Types from "../app/ArgumentTypes"
 
 const help: Command = {
   regex: /h(?:[aeu]?lp)?/i,
   channels: ["717070722945646663"],
   description: "Affiche les commandes existantes",
   channelType: "guild",
-  args: { command: ArgTypes.Command },
+  args: { command: Types.command },
   call: ({ message, args: { command } }) => {
-    const embed = new MessageEmbed()
+    const embed = new Discord.MessageEmbed()
 
     if (!command) {
       embed.setTitle("Commandes").addFields(
-        commands.map((c) => ({
+        Globals.commands.map((c) => ({
           name: c.name,
           value: c.description || "Pas de description",
         }))
