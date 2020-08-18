@@ -15,7 +15,7 @@ const prefix: Command = {
     db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)
     const embed = new MessageEmbed()
       .setTitle(`Le prefix de Nano sur ce serveur a bien été modifié.`)
-      .setDescription(`Nouveau prefix: ${newPrefix}`)
+      .setDescription(`Nouveau prefix: \`${newPrefix}\``)
     message.channel.send(embed).catch(console.error)
   },
 }

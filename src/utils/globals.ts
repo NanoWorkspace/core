@@ -25,3 +25,18 @@ fs.readdirSync(join(__dirname, "..", "commands")).forEach((fileName) => {
 export const client = new Discord.Client({
   disableMentions: "everyone",
 })
+
+export const events: [string, string, string?][] = []
+
+fs.readdirSync(join(__dirname, "..", "events")).forEach((fileName) => {
+  const [fn, eventName, eventSubName] = fileName
+    .slice(0, fileName.lastIndexOf("."))
+    .split("_")
+  events.push([fn, eventName, eventSubName])
+  client[fn as "on" | "once"](
+    eventName,
+    require(join(__dirname, "..", "events", fileName))
+  )
+})
+
+console.log(client.listeners("message")[0])
