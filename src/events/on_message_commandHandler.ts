@@ -116,7 +116,14 @@ module.exports = async (message: Message) => {
         return client.users.resolve(user) !== message.author
       })
     )
-      return
+      return message.channel.send(
+        "❌ Utilisable seulement par les utilisateurs suivants:\n" +
+          command.users
+            .map((user) => {
+              return client.users.resolve(user)?.username
+            })
+            .join("\n")
+      )
   }
 
   // todo: manage command.cooldown and command.typing

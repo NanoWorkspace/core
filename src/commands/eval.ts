@@ -14,12 +14,12 @@ const evalCommand: Command = {
       let result = await eval(`async () => {${code}}`)()
 
       if (result !== undefined) {
-        await message.channel.send(text.code(String(result)))
+        await channel.send(text.code(String(result)))
       } else {
-        await message.channel.send("Le code a bien été exécuté.")
+        await channel.send("Le code a bien été exécuté.")
       }
     } catch (error) {
-      await message.channel.send(text.code(error.message))
+      await channel.send(text.code(error.message))
     }
   },
 }
