@@ -10,9 +10,7 @@ const addTweetUser: Command = {
   description:
     "Retire un utilisateur twitter de la liste d'utilisateurs autorisés.",
   channelType: "guild",
-  args: {
-    user: ArgTypes.Rest,
-  },
+  args: { user: ArgTypes.Rest },
   call: ({ message, args }) => {
     const { user } = args
 

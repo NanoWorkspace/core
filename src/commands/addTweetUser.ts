@@ -10,9 +10,7 @@ const addTweetUser: Command = {
     "Ajoute un utilisateur twitter a la liste d'utilisateurs autorisés.",
   channelType: "guild",
   owner: true,
-  args: {
-    user: ArgTypes.Rest,
-  },
+  args: { user: ArgTypes.Rest },
   call: ({ message, args }) => {
     const { user } = args
 

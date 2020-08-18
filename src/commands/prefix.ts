@@ -9,9 +9,7 @@ const prefix: Command = {
   channelType: "guild",
   admin: true,
   channels: ["717070722945646663"],
-  args: {
-    newPrefix: ArgTypes.Rest,
-  },
+  args: { newPrefix: ArgTypes.Rest },
   call: ({ message, args }) => {
     const { newPrefix } = args
     db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)
