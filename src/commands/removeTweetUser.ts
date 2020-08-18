@@ -5,7 +5,6 @@ import Types from "../app/ArgumentTypes"
 
 const addTweetUser: Command = {
   regex: /removetw(?:eet|itter)user|rtu/i,
-  channels: ["717070722945646663"],
   owner: true,
   description:
     "Retire un utilisateur twitter de la liste d'utilisateurs autorisés.",

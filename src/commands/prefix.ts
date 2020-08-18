@@ -8,7 +8,6 @@ const prefix: Command = {
   description: "Change le prefix de Nano pour ce serveur",
   channelType: "guild",
   admin: true,
-  channels: ["717070722945646663"],
   args: { newPrefix: Types.text },
   call: ({ message, args: { newPrefix } }) => {
     Globals.db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)

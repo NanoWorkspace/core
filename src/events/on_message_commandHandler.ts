@@ -41,44 +41,14 @@ module.exports = async (message: Discord.Message) => {
   // check filters
   if (message.guild) {
     if (command.channelType === "dm")
-      return message.channel.send("❌ Utilisable seulement dans un serveur")
+      return message.channel.send("❌ Utilisable seulement en DM.")
     if (command.owner) {
       if (message.member !== message.guild.owner)
-        return message.channel.send("❌ Utilisable seulement par un owner")
+        return message.channel.send("❌ Utilisable seulement par un owner.")
     }
     if (command.admin) {
       if (!message.member?.hasPermission("ADMINISTRATOR", { checkOwner: true }))
-        return message.channel.send("❌ Utilisable seulement par un admin")
-    }
-    if (command.channels) {
-      if (
-        command.channels.every((channel) => {
-          return Globals.client.channels.resolve(channel) !== message.channel
-        })
-      )
-        return message.channel.send(
-          "❌ Utilisable seulement dans les salons suivants:\n" +
-            command.channels
-              .map((channel) => {
-                return `<#${message.guild?.channels.resolveID(channel)}>`
-              })
-              .join("\n")
-        )
-    }
-    if (command.members) {
-      if (
-        command.members.every((member) => {
-          return message.guild?.members.resolve(member) !== message.member
-        })
-      )
-        return message.channel.send(
-          "❌ Utilisable seulement par les membres suivants:\n" +
-            command.members
-              .map((member) => {
-                return message.guild?.members.resolve(member)?.displayName
-              })
-              .join("\n")
-        )
+        return message.channel.send("❌ Utilisable seulement par un admin.")
     }
     if (command.permissions) {
       if (
@@ -91,24 +61,14 @@ module.exports = async (message: Discord.Message) => {
             command.permissions.join("\n")
         )
     }
-    if (command.roles) {
-      if (
-        !command.roles.every((role) => {
-          return message.member?.roles.resolve(role)
-        })
-      )
-        return message.channel.send(
-          "❌ Utilisable seulement avec les rôles suivants:\n" +
-            command.roles
-              .map((role) => {
-                return message.guild?.roles.resolve(role)?.name
-              })
-              .join("\n")
-        )
-    }
   } else {
-    if (command.channelType === "guild")
-      return message.channel.send("❌ Utilisable seulement en DM")
+    if (
+      command.channelType === "guild" ||
+      command.permissions ||
+      command.owner ||
+      command.admin
+    )
+      return message.channel.send("❌ Utilisable seulement dans un serveur.")
   }
   if (command.users) {
     if (
@@ -127,6 +87,32 @@ module.exports = async (message: Discord.Message) => {
   }
 
   // todo: manage command.cooldown and command.typing
+  if (command.cooldown) {
+    // just narrowing test for TypeScript
+    if (!command.name) return
+
+    const { cooldown } = Globals
+    const now = Date.now()
+
+    if (!cooldown.hasOwnProperty(message.author.id)) {
+      cooldown[message.author.id] = {
+        [command.name]: Date.now(),
+      }
+    } else {
+      if (cooldown[message.author.id].hasOwnProperty(command.name)) {
+        const lastUsage = cooldown[message.author.id][command.name]
+        if (command.cooldown > now - lastUsage) {
+          return message.channel.send(
+            `❌ Utilisable dans seulement \`${
+              command.cooldown - (now - lastUsage)
+            }\` ms`
+          )
+        }
+      } else {
+        cooldown[message.author.id][command.name] = now
+      }
+    }
+  }
 
   // launch command
   await command.call({

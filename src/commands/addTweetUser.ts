@@ -5,7 +5,6 @@ import Types from "../app/ArgumentTypes"
 
 const addTweetUser: Command = {
   regex: /addtw(?:eet|itter)user|atu/i,
-  channels: ["717070722945646663"],
   description:
     "Ajoute un utilisateur twitter a la liste d'utilisateurs autorisés.",
   channelType: "guild",

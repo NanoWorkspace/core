@@ -7,10 +7,7 @@ export default interface Command {
   owner?: boolean
   admin?: boolean
   permissions?: Discord.PermissionResolvable[]
-  roles?: Discord.RoleResolvable[]
   users?: Discord.UserResolvable[]
-  members?: Discord.GuildMemberResolvable[]
-  channels?: Discord.GuildChannelResolvable[]
   channelType?: "dm" | "guild"
   cooldown?: number
   typing?: boolean

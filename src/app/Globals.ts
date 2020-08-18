@@ -40,9 +40,15 @@ fs.readdirSync(join(__dirname, "..", "events")).forEach((fileName) => {
   events.push(eventInfo)
 })
 
+/** Contains timestamps of last commands usage for each user */
+export const cooldown: {
+  [user: string]: { [commandName: string]: number }
+} = {}
+
 export default {
   db,
   commands,
   client,
   events,
+  cooldown,
 }
