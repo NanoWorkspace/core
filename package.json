@@ -14,7 +14,7 @@
     "prettier": "prettier src --write",
     "build": "git rm -r --ignore-unmatch dist && npm run prettier && tsc",
     "start": "npm run build && node --trace-warnings .",
-    "push": "git add * && git commit -m 'continue' && git push origin master"
+    "push": "git add * && git commit -m continue && git push origin master"
   },
   "keywords": [],
   "author": "ghom",
