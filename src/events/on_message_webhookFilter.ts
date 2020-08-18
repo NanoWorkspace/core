@@ -1,5 +1,5 @@
 import { Message } from "discord.js"
-import { client, db } from "../utils/globals"
+import { db } from "../utils/globals"
 import { wait } from "../utils/time"
 
 module.exports = async (message: Message) => {
@@ -29,6 +29,5 @@ module.exports = async (message: Message) => {
         await message.delete()
       }
     }
-    return
   }
 }

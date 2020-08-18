@@ -13,7 +13,7 @@
   "scripts": {
     "prettier": "prettier src --write",
     "build": "npm run prettier && tsc",
-    "start": "npm run build && node --trace-warnings ."
+    "start": "git rm -r --ignore-unmatch dist && npm run build && node --trace-warnings ."
   },
   "keywords": [],
   "author": "ghom",

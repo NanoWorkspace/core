@@ -1,6 +1,5 @@
 import { Message } from "discord.js"
 import { client, db } from "../utils/globals"
-import { wait } from "../utils/time"
 import { resolveCommand } from "../app/Command"
 
 module.exports = async (message: Message) => {
