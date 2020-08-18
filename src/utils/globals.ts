@@ -15,11 +15,13 @@ export const commands: Discord.Collection<
 
 fs.readdirSync(join(__dirname, "..", "commands")).forEach((fileName) => {
   const commandName = fileName.slice(0, fileName.lastIndexOf("."))
-  commands.set(
-    commandName,
-    require(join(__dirname, "..", "commands", fileName))
+  const command: Command = require(join(__dirname, "..", "commands", fileName))
+  commands.set(commandName, command)
+  command.name = commandName
+  command.regex = new RegExp(
+    `^(?:${command.regex.source})(?:\\s+|$)`,
+    command.regex.flags
   )
-  ;(commands.get(commandName) as Command).name = commandName
 })
 
 export const client = new Discord.Client({

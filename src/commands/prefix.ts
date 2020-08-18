@@ -4,14 +4,13 @@ import * as ArgTypes from "../utils/argTypes"
 import { db } from "../utils/globals"
 
 const prefix: Command = {
-  regex: /^pr[eé]fix\s+/i,
+  regex: /pr[eé]fix/i,
   description: "Change le prefix de Nano pour ce serveur",
   channelType: "guild",
   admin: true,
   channels: ["717070722945646663"],
-  args: { newPrefix: ArgTypes.Rest },
-  call: ({ message, args }) => {
-    const { newPrefix } = args
+  args: { newPrefix: ArgTypes.Text },
+  call: ({ message, args: { newPrefix } }) => {
     db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)
     const embed = new MessageEmbed()
       .setTitle(`Le prefix de Nano sur ce serveur a bien été modifié.`)

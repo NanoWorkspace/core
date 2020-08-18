@@ -4,14 +4,12 @@ import { commands } from "../utils/globals"
 import * as ArgTypes from "../utils/argTypes"
 
 const help: Command = {
-  regex: /^h(?:[aeu]?lp)?(?:\s+|$)/i,
+  regex: /h(?:[aeu]?lp)?/i,
   channels: ["717070722945646663"],
   description: "Affiche les commandes existantes",
   channelType: "guild",
   args: { command: ArgTypes.Command },
-  call: ({ message, args }) => {
-    const { command } = args
-
+  call: ({ message, args: { command } }) => {
     const embed = new MessageEmbed()
 
     if (!command) {
