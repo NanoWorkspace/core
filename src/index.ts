@@ -1,8 +1,7 @@
 import Discord from "discord.js"
 import { promises as fs } from "fs"
 import { join } from "path"
-import Command, { CommandEvent } from "./app/Command"
-import resolveCommand from "./utils/resolveCommand"
+import Command, { resolveCommand } from "./app/Command"
 import { commands, db } from "./utils/globals"
 
 const TOKEN: string = require("../TOKEN.json")
@@ -16,12 +15,17 @@ const client = new Discord.Client({
 ;(async () => {
   const commandNames = await fs.readdir(join(__dirname, "commands"))
 
-  commandNames.forEach((commandName) =>
-    commands.set(
-      commandName.slice(0, commandName.lastIndexOf(".")),
-      require(join(__dirname, "commands", commandName))
+  commandNames.forEach((commandFileName) => {
+    const commandName = commandFileName.slice(
+      0,
+      commandFileName.lastIndexOf(".")
     )
-  )
+    commands.set(
+      commandName,
+      require(join(__dirname, "commands", commandFileName))
+    )
+    ;(commands.get(commandName) as Command).name = commandName
+  })
 
   await client.login(TOKEN)
 
@@ -30,6 +34,7 @@ const client = new Discord.Client({
     console.table(commands)
     console.table(
       client.guilds.cache.mapValues((guild) => {
+        db.ensure("prefix", "nano ", `guilds.${guild.id}`)
         return guild.name
       })
     )
@@ -51,11 +56,12 @@ const client = new Discord.Client({
           await message.delete()
         } else if (embed.author) {
           const tweetUserMatch = /\(@(.+)\)/.exec(String(embed.author.name))
-          const tweetUser = tweetUserMatch ? tweetUserMatch[1] : "none"
+          const tweetUser = tweetUserMatch ? tweetUserMatch[1] : null
           if (
-            !db
+            !tweetUser ||
+            db
               .get("authorizedTwitterUsers")
-              .some((user: string) => user === tweetUser)
+              .every((user: string) => user !== tweetUser)
           ) {
             await message.delete()
           }
@@ -66,21 +72,30 @@ const client = new Discord.Client({
       return
     }
 
+    // check prefix
+    let prefix = "nano ",
+      content
+    if (message.guild) {
+      prefix = db.get("prefix", `guilds.${message.guild.id}`)
+    }
+    if (message.content.startsWith(prefix)) {
+      content = message.content.replace(prefix, "").trim()
+    } else return
+
     // command handler test
-    const command = resolveCommand(message.content)
+    const { command, rest } = resolveCommand(content)
     if (!command) return
 
-    // prepare command event
-    const commandEvent: CommandEvent = {
-      message,
-      arguments: {},
-    }
+    content = rest as string
 
     // command arguments parsing
     const args: { [name: string]: any } = {}
-    if (command.arguments) {
-      for (const name in command.arguments) {
-        args[name] = await command.arguments[name](message.content)
+    if (command.args) {
+      let tempContent = content
+      for (const name in command.args) {
+        const { arg, rest } = await command.args[name](tempContent)
+        args[name] = arg
+        tempContent = rest || ""
       }
     }
 
@@ -93,7 +108,9 @@ const client = new Discord.Client({
           return message.channel.send("❌ Utilisable seulement par un owner")
       }
       if (command.admin) {
-        if (!message.member?.hasPermission("ADMINISTRATOR"))
+        if (
+          !message.member?.hasPermission("ADMINISTRATOR", { checkOwner: true })
+        )
           return message.channel.send("❌ Utilisable seulement par un admin")
       }
       if (command.channels) {
@@ -168,7 +185,10 @@ const client = new Discord.Client({
     // todo: manage command.cooldown and command.typing
 
     // launch command
-    await command.call(commandEvent)
+    await command.call({
+      message,
+      args,
+    })
   })
 })().catch((error) => {
   throw error

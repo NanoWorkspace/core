@@ -1,8 +1,9 @@
 import Discord from "discord.js"
+import { commands } from "../utils/globals"
 
 export default interface Command {
-  name: string
-  aliases?: (string | RegExp)[]
+  name?: string
+  regex: RegExp
   owner?: boolean
   admin?: boolean
   permissions?: Discord.PermissionResolvable[]
@@ -15,15 +16,22 @@ export default interface Command {
   typing?: boolean
   description?: string
   examples?: string[]
-  arguments?: { [name: string]: CommandArgument }
+  args?: { [name: string]: CommandArgument }
   call: (event: CommandEvent) => void
 }
 
 export interface CommandEvent {
   message: Discord.Message
-  arguments: { [name: string]: any }
+  args: { [name: string]: any }
 }
 
 export type CommandArgument = (
   content: string
-) => Promise<any | "none"> | "none" | any
+) => Promise<{ arg: any; rest: string }> | { arg: any; rest?: string }
+
+export const resolveCommand = (resolvable: string) => {
+  let command = commands.find((c) => c.regex.test(resolvable))
+  if (command)
+    return { command, rest: resolvable.replace(command.regex, "").trim() }
+  return { command: null }
+}

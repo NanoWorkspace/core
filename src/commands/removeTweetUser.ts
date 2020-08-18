@@ -4,12 +4,12 @@ import { db } from "../utils/globals"
 import * as ArgTypes from "../utils/argTypes"
 
 const addTweetUser: Command = {
-  regex: /^(?:addtw(?:eet|itter)user|atu)(?:\s+|$)/i,
+  regex: /^(?:removetw(?:eet|itter)user|rtu)(?:\s+|$)/i,
   channels: ["717070722945646663"],
-  description:
-    "Ajoute un utilisateur twitter a la liste d'utilisateurs autorisés.",
-  channelType: "guild",
   owner: true,
+  description:
+    "Retire un utilisateur twitter de la liste d'utilisateurs autorisés.",
+  channelType: "guild",
   args: {
     user: ArgTypes.Rest,
   },
@@ -21,9 +21,9 @@ const addTweetUser: Command = {
     if (!user) {
       embed.setTitle("Argument manquant.")
     } else {
-      db.push("authorizedTwitterUsers", user)
+      db.remove("authorizedTwitterUsers", user)
       embed
-        .setTitle("Utilisateur ajouté.")
+        .setTitle("Utilisateur retiré.")
         .setDescription(`Utilisateur: \`${user}\``)
     }
 
