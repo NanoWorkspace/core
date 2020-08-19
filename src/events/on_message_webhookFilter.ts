@@ -4,7 +4,7 @@ import time from "../utils/time"
 
 module.exports = async (message: Discord.Message) => {
   // webhook filter
-  if (message.webhookID) {
+  if (message.webhookID && message.guild) {
     // waiting embed loading
     await time.wait(5000)
 
@@ -20,7 +20,7 @@ module.exports = async (message: Discord.Message) => {
         if (
           !tweetUser ||
           Globals.db
-            .get("authorizedTwitterUsers")
+            .get(message.guild.id, "authorizedTwitterUsers")
             .every((user: string) => user !== tweetUser)
         ) {
           await message.delete()

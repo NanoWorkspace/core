@@ -8,14 +8,9 @@ const autoRole: Command = {
   description:
     "Gère l'ajout de rôles automatiques pour les bots et les utilisateurs.",
   channelType: "guild",
+  admin: true,
   args: {
-    isBot: (content) => {
-      const regex = /^bot/i
-      return {
-        arg: regex.test(content),
-        rest: content.replace(regex, "").trim(),
-      }
-    },
+    isBot: Types.boolean,
     action: Types.action,
     role: Types.role,
   },

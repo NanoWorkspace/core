@@ -6,8 +6,6 @@ import { join } from "path"
 
 export const db = new Enmap({ name: "db" })
 
-db.ensure("authorizedTwitterUsers", [])
-
 export const commands: Discord.Collection<
   string,
   Command

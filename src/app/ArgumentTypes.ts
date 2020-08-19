@@ -81,10 +81,19 @@ export const action: CommandArgument = (content) => {
   }
 }
 
+export const boolean: CommandArgument = (content) => {
+  const regex = /^(?:o(?:ui)?|y(?:es)?|true)/i
+  return {
+    arg: regex.test(content),
+    rest: content.replace(regex, "").trim(),
+  }
+}
+
 export default {
   command,
   text,
   word,
   role,
   action,
+  boolean,
 }

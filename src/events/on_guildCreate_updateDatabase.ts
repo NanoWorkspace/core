@@ -8,5 +8,6 @@ module.exports = (guild: Discord.Guild) => {
       user: [],
       bot: [],
     },
+    authorizedTwitterUsers: [],
   })
 }
