@@ -86,7 +86,7 @@ module.exports = async (message: Discord.Message) => {
       )
   }
 
-  // todo: manage command.cooldown and command.typing
+  // check cooldown
   if (command.cooldown) {
     // just narrowing test for TypeScript
     if (!command.name) return
@@ -96,7 +96,7 @@ module.exports = async (message: Discord.Message) => {
 
     if (!cooldown.hasOwnProperty(message.author.id)) {
       cooldown[message.author.id] = {
-        [command.name]: Date.now(),
+        [command.name]: now,
       }
     } else {
       if (cooldown[message.author.id].hasOwnProperty(command.name)) {
@@ -108,10 +108,14 @@ module.exports = async (message: Discord.Message) => {
             }\` ms`
           )
         }
-      } else {
-        cooldown[message.author.id][command.name] = now
       }
     }
+    cooldown[message.author.id][command.name] = now
+  }
+
+  // start typing
+  if (command.typing) {
+    message.channel.startTyping()
   }
 
   // launch command
@@ -119,4 +123,9 @@ module.exports = async (message: Discord.Message) => {
     message,
     args,
   })
+
+  // stop typing
+  if (command.typing) {
+    await message.channel.stopTyping(true)
+  }
 }

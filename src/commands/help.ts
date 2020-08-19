@@ -1,5 +1,5 @@
-import Command from "../app/Command"
 import Discord from "discord.js"
+import Command from "../app/Command"
 import Globals from "../app/Globals"
 import Types from "../app/ArgumentTypes"
 import text from "../utils/text"
@@ -9,7 +9,6 @@ const help: Command = {
   description: "Affiche les commandes existantes",
   channelType: "guild",
   args: { command: Types.command },
-  cooldown: 10000,
   call: ({ message, args }) => {
     const command: Command = args.command
 
