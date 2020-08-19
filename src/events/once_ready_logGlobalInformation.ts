@@ -1,5 +1,7 @@
 import Globals from "../app/Globals"
 
+const guildCreate = require("./on_guildCreate_updateDatabase")
+
 module.exports = () => {
   console.log("EVENTS")
   console.table(Globals.events)
@@ -8,7 +10,7 @@ module.exports = () => {
   console.log("GUILDS")
   console.table(
     Globals.client.guilds.cache.mapValues((guild) => {
-      Globals.db.ensure("prefix", "nano ", `guilds.${guild.id}`)
+      guildCreate(guild)
       return guild.name
     })
   )

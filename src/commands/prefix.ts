@@ -10,7 +10,8 @@ const prefix: Command = {
   admin: true,
   args: { newPrefix: Types.text },
   call: ({ message, args: { newPrefix } }) => {
-    Globals.db.set("prefix", newPrefix, `guilds.${message.guild?.id}`)
+    if (!message.guild) return
+    Globals.db.set(message.guild.id, newPrefix, "prefix")
     const embed = new Discord.MessageEmbed()
       .setTitle(`Le prefix de Nano sur ce serveur a bien été modifié.`)
       .setDescription(`Nouveau prefix: \`${newPrefix}\``)

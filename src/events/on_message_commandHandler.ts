@@ -15,7 +15,7 @@ module.exports = async (message: Discord.Message) => {
   let prefix = "nano ",
     content
   if (message.guild) {
-    prefix = Globals.db.get("prefix", `guilds.${message.guild.id}`)
+    prefix = Globals.db.get(message.guild.id, "prefix")
   }
   if (message.content.startsWith(prefix)) {
     content = message.content.replace(prefix, "").trim()
@@ -32,7 +32,7 @@ module.exports = async (message: Discord.Message) => {
   if (command.args) {
     let tempContent = content
     for (const name in command.args) {
-      const { arg, rest } = await command.args[name](tempContent)
+      const { arg, rest } = await command.args[name](tempContent, message)
       args[name] = arg
       tempContent = rest || ""
     }

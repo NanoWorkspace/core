@@ -23,8 +23,9 @@ export interface CommandEvent {
 }
 
 export type CommandArgument = (
-  content: string
-) => Promise<{ arg: any; rest: string }> | { arg: any; rest?: string }
+  content: string,
+  message: Discord.Message
+) => Promise<{ arg: any; rest?: string }> | { arg: any; rest?: string }
 
 export const resolveCommand = (resolvable: string) => {
   let command = Globals.commands.find((c) => c.regex.test(resolvable))
