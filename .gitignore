@@ -1,7 +1,5 @@
-node_modules
-.idea
-.vscode
-.env
-dist
-TOKEN.json
-data
+/node_modules
+/.idea
+/.vscode
+/dist
+/data
