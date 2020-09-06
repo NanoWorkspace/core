@@ -17,7 +17,7 @@ async function updatePackage() {
     // commit message
     const pattern = /^(git commit -m ).+$/
     const [, command] = pattern.exec(PACKAGE.scripts.commit)
-    PACKAGE.scripts.commit = `${command}"patch to ${PACKAGE.version}"`
+    PACKAGE.scripts.commit = `${command}"patch core to ${PACKAGE.version}"`
   }
 
   await fs.writeFile(path.join(ROOT, "package.json"), JSON.stringify(PACKAGE))
@@ -35,7 +35,7 @@ async function updateReadme() {
 
   const newDeps = Object.keys(PACKAGE.dependencies)
     .map((dep) => {
-      return `![${dep}](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/NanoTemplate/${dep}?color=orange&style=plastic)`
+      return `![${dep}](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/${dep}?color=orange&style=plastic)`
     })
     .join("\n")
 
