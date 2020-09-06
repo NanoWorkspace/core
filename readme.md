@@ -15,11 +15,11 @@ A Discord bot core in TypeScript
 
 ## Dependencies
 
-![better-sqlite3](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/better-sqlite3?color=orange&style=plastic)
-![chalk](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/chalk?color=orange&style=plastic)
-![discord.js](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/discord.js?color=orange&style=plastic)
-![dotenv](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/dotenv?color=orange&style=plastic)
-![enmap](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/enmap?color=orange&style=plastic)
+![better-sqlite3](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/NanoTemplate/better-sqlite3?color=orange&style=plastic)
+![chalk](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/NanoTemplate/chalk?color=orange&style=plastic)
+![discord.js](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/NanoTemplate/discord.js?color=orange&style=plastic)
+![dotenv](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/NanoTemplate/dotenv?color=orange&style=plastic)
+![enmap](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/NanoTemplate/enmap?color=orange&style=plastic)
 
 ## Usage
 

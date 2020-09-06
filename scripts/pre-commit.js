@@ -29,7 +29,7 @@ async function updateReadme() {
   const readme = await fs.readFile(path.join(ROOT, "readme.md"), {
     encoding: "utf8",
   })
-  const pattern = /(## Dependencies\s+)(!.+)(\s+## Template usage)/s
+  const pattern = /(## Dependencies\s+)(!.+)(\s+## Usage)/s
 
   const [, start, deps, end] = pattern.exec(readme)
 
