@@ -21,7 +21,15 @@ export async function forEachFile(
   }
 }
 
-const File = {
+export interface NanoFile {
+  forEachFile: (
+    dirPaths: string[],
+    fn: (path: string) => any,
+    ignore?: RegExp
+  ) => void
+}
+
+const File: NanoFile = {
   forEachFile,
 }
 

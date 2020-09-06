@@ -34,7 +34,19 @@ export async function awaiter(
   return message
 }
 
-const Message = {
+export interface NanoMessage {
+  awaiter: (
+    filter: (message: Discord.Message) => Promise<boolean> | boolean,
+    options?: {
+      maxTime?: number
+      maxTries?: number
+      maxIdleTime: number
+      stopper?: (message: Discord.Message) => Promise<boolean> | boolean
+    }
+  ) => Promise<Discord.Message | null>
+}
+
+const Message: NanoMessage = {
   awaiter,
 }
 

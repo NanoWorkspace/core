@@ -1,7 +1,6 @@
 /node_modules
 /.idea
 /.vscode
-/src
 /data
 /tsconfig.json
 /scripts

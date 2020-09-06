@@ -6,7 +6,12 @@ export function improvePattern(pattern: RegExp): RegExp {
   return new RegExp(`^(?:${pattern.source})(?:\\s|$)`, pattern.flags)
 }
 
-const Text = {
+export interface NanoText {
+  improvePattern: (pattern: RegExp) => RegExp
+  code: (text: string, lang?: string) => string
+}
+
+const Text: NanoText = {
   improvePattern,
   code,
 }

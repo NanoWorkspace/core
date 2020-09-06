@@ -7,7 +7,11 @@ export function root(_path?: string): string {
   return _path ? path.resolve(rootPath, _path) : rootPath
 }
 
-const Path = {
+export interface NanoPath {
+  root: (_path?: string) => string
+}
+
+const Path: NanoPath = {
   root,
 }
 

@@ -281,9 +281,9 @@ const ArgumentTypes = {
   member,
   snowflake,
   number,
-  numberBetween,
-  emoji,
   text,
+  emoji,
+  numberBetween,
   arrayFrom,
 }
 

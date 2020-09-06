@@ -20,7 +20,7 @@ interface GuildData {
   authorizedTwitterUsers: string[]
 }
 
-class Database extends Enmap {
+export class Database extends Enmap {
   constructor() {
     super({ name: "db" })
   }

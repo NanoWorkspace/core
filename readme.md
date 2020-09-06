@@ -1,8 +1,8 @@
-![nano banner](assets/images/banner.jpg)
+![nano banner](https://raw.githubusercontent.com/CamilleAbella/Nano/master/assets/images/banner.jpg)
 
 ![GitHub forks](https://img.shields.io/github/forks/CamilleAbella/Nano?color=black&logo=github&style=for-the-badge) ![GitHub stars](https://img.shields.io/github/stars/CamilleAbella/Nano?color=black&logo=github&style=for-the-badge) ![GitHub watchers](https://img.shields.io/github/watchers/CamilleAbella/Nano?color=black&logo=github&style=for-the-badge)
 
-# Nano (なの) Template ![](assets/images/logo.png)
+# Nano (なの) Template ![](https://raw.githubusercontent.com/CamilleAbella/Nano/master/assets/images/logo.png)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/CamilleAbella/Nano?color=%23BDB76B&style=plastic)
 [![GitHub search todo](https://img.shields.io/github/search/CamilleAbella/Nano/todo?color=%23BDB76B&label=todo%20count&style=plastic)](https://github.com/CamilleAbella/Nano/search?l=TypeScript&q=todo)
@@ -34,7 +34,11 @@ A Discord bot core in TypeScript
 ### 3. Import
 
 ```ts
-import * as Nano from "nano-bot"
+import Nano from "nano-bot/src"
+```
+
+```js
+const Nano = require("nano-bot")
 ```
 
 ### 4. Code in TypeScript

@@ -1,8 +1,8 @@
 {
-  "name": "nano-bot",
+  "name": "@ghom/nano-bot",
   "author": "ghom",
   "license": "ISC",
-  "version": "v1.10.9-beta",
+  "version": "v1.10.10-beta",
   "description": "Discord bot core in TypeScript.",
   "main": "dist/index.js",
   "prettier": {
@@ -15,9 +15,8 @@
   "scripts": {
     "prettier": "prettier src scripts package.json assets/schemas/nano.config.schema.json assets/schemas/nano.module.schema.json readme.md tsconfig.json --write",
     "build": "git rm -r --ignore-unmatch -f ./dist && npm run prettier && tsc",
-    "start": "npm run build && node .",
     "precommit": "node scripts/pre-commit && npm run prettier && git add *",
-    "commit": "git commit -m \"patch core to v1.10.9-beta\"",
+    "commit": "git commit -m \"patch core to v1.10.10-beta\"",
     "push": "npm run commit && git push origin master"
   },
   "keywords": [
@@ -38,6 +37,6 @@
     "chalk": "4.1.0",
     "discord.js": "12.3.1",
     "dotenv": "8.2.0",
-    "enmap": "5.6.1"
+    "enmap": "^5.7.1"
   }
 }
