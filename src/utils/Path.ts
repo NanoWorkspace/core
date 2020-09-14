@@ -1,14 +1,16 @@
 import path from "path"
 
-export function root(_path?: string): string {
+export function root(...pathSegments: string[]): string {
   const rootPath = require.main
     ? path.dirname(require.main.filename)
     : process.cwd()
-  return _path ? path.resolve(rootPath, _path) : rootPath
+  return pathSegments.length > 0
+    ? path.resolve(rootPath, ...pathSegments)
+    : rootPath
 }
 
 export interface NanoPath {
-  root: (_path?: string) => string
+  root: (...pathSegments: string[]) => string
 }
 
 const Path: NanoPath = {

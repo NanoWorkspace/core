@@ -7,7 +7,7 @@ import Embed from "./app/Embed"
 import Paginator from "./app/Paginator"
 import Logger from "./app/Logger"
 
-dotenv.config({ path: Utils.Path.root(".env") })
+dotenv.config({ path: Utils.Path.root("..", ".env") })
 
 Globals.client
   .login(process.env.TOKEN || Globals.bot.token)

@@ -18,7 +18,7 @@ export interface Bot extends Partial<Discord.ClientApplication>, NanoConfig {
   owners: Discord.Collection<Discord.Snowflake, Discord.User>
 }
 
-const bot: Bot = require(Path.root("nano.config.json"))
+const bot: Bot = require(Path.root("..", "nano.config.json"))
 
 bot.owners = new Discord.Collection()
 

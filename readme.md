@@ -2,14 +2,12 @@
 
 ![GitHub forks](https://img.shields.io/github/forks/CamilleAbella/Nano?color=black&logo=github&style=for-the-badge) ![GitHub stars](https://img.shields.io/github/stars/CamilleAbella/Nano?color=black&logo=github&style=for-the-badge) ![GitHub watchers](https://img.shields.io/github/watchers/CamilleAbella/Nano?color=black&logo=github&style=for-the-badge)
 
-# Nano (なの) Template ![](https://raw.githubusercontent.com/CamilleAbella/Nano/master/assets/images/logo.png)
+# Nano (なの) Core ![](https://raw.githubusercontent.com/CamilleAbella/Nano/master/assets/images/logo.png)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/CamilleAbella/Nano?color=%23BDB76B&style=plastic)
 [![GitHub search todo](https://img.shields.io/github/search/CamilleAbella/Nano/todo?color=%23BDB76B&label=todo%20count&style=plastic)](https://github.com/CamilleAbella/Nano/search?l=TypeScript&q=todo)
 ![GitHub repo size](https://img.shields.io/github/repo-size/CamilleAbella/Nano?color=%23BDB76B&label=size&style=plastic)
-![GitHub All Releases](https://img.shields.io/github/downloads/CamilleAbella/Nano/total?color=%23BDB76B&style=plastic)
 ![GitHub issues](https://img.shields.io/github/issues/CamilleAbella/Nano?color=%23BDB76B&style=plastic)
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/CamilleAbella/Nano?color=%23BDB76B&include_prereleases&style=plastic)
 
 A Discord bot core in TypeScript
 
@@ -34,20 +32,20 @@ A Discord bot core in TypeScript
 ### 3. Import
 
 ```ts
-import Nano from "nano-bot/src"
+import "@ghom/nano-bot"
 ```
 
 ```js
-const Nano = require("nano-bot")
+require("@ghom/nano-bot")
 ```
 
 ### 4. Code in TypeScript
 
-- Please use `src/app/Embed.ts` class to make embeds.
+- Please use `Nano.Embed` class to make embeds.
 - Add your own modules in `src/modules/`.
 - Check the existing modules for examples.
-- The Discord client is in the `Globals` object as `client`.
-- The ApplicationClient is fetched in the `Globals` object as `bot`.
+- The Discord client is in the `Nano.Globals` object as `client`.
+- The ApplicationClient is fetched in the `Nano.Globals` object as `bot`.
 
 ### 5. Scripts explanation
 

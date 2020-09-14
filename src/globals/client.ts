@@ -3,6 +3,7 @@ import bot from "./bot"
 import Logger from "../app/Logger"
 import path from "path"
 import File from "../utils/File"
+import Path from "../utils/Path"
 
 Logger.load("file", __filename)
 
@@ -21,11 +22,11 @@ client.once("ready", async () => {
   Object.assign(bot, app)
 
   await File.forEachFile(
-    [path.join(__dirname, "..", "modules")],
+    [path.join(__dirname, "..", "modules"), Path.root("modules")],
     (filePath) => {
-      const fineName = path.basename(filePath)
-      if (fineName === "module.js") require(filePath)
-    }
+      if (filePath.endsWith("dist/index.js")) require(filePath)
+    },
+    /^(?:node_modules|src)$/i
   )
 
   // todo remove handlers for commands and events
@@ -33,6 +34,8 @@ client.once("ready", async () => {
     [
       path.join(__dirname, "..", "events"),
       path.join(__dirname, "..", "commands"),
+      Path.root("events"),
+      Path.root("commands"),
     ],
     (filePath) => {
       if (filePath.endsWith(".js")) require(filePath)

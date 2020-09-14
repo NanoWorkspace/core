@@ -7,6 +7,7 @@ export async function forEachFile(
   ignore?: RegExp
 ) {
   for (const dirPath of dirPaths) {
+    if (!fs.existsSync(dirPath)) continue
     const dir = await fs.promises.readdir(dirPath)
     for (const filename of dir) {
       if (ignore && ignore.test(filename)) continue

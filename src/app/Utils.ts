@@ -5,7 +5,16 @@ import Path from "../utils/Path"
 import Text from "../utils/Text"
 import Time from "../utils/Time"
 
-const Utils = {
+interface NanoUtils {
+  ArgumentTypes: typeof ArgumentTypes
+  File: typeof File
+  Message: typeof Message
+  Path: typeof Path
+  Text: typeof Text
+  Time: typeof Time
+}
+
+const Utils: NanoUtils = {
   ArgumentTypes,
   File,
   Message,

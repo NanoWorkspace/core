@@ -1,8 +1,9 @@
 import chalk from "chalk"
+import Path from "../utils/Path"
 
 // todo: allow custom template for logs
 
-const config = require("../../nano.config.json")
+const config = require(Path.root("..", "nano.config.json"))
 
 abstract class Logger {
   static space() {
