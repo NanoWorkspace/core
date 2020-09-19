@@ -13,10 +13,6 @@ interface GuildData {
   logChannel?: Discord.TextChannel
   ignoredChannels: Discord.Snowflake[]
   ignoredUsers: Discord.Snowflake[]
-  autoRoles: {
-    user: Discord.Snowflake[]
-    bot: Discord.Snowflake[]
-  }
   authorizedTwitterUsers: string[]
 }
 
@@ -30,10 +26,6 @@ export class Database extends Enmap {
       prefix: bot.prefix,
       ignoredChannels: [],
       ignoredUsers: [],
-      autoRoles: {
-        user: [],
-        bot: [],
-      },
       authorizedTwitterUsers: [],
     }
     this.ensure(guild.id, data)
