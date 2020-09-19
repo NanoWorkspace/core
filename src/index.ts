@@ -38,5 +38,3 @@ const Nano: NanoExports = {
 
 export default Nano
 module.exports = Nano
-
-// test
