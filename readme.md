@@ -21,47 +21,4 @@ A Discord bot core in TypeScript
 
 ## Usage
 
-### 1. Install
-
-- `npm i nano-bot`
-
-### 2. Prepare
-
-- Make `.env` file with `TOKEN=YOUR_TOKEN` on your root project folder.
-
-### 3. Import
-
-```ts
-import "@ghom/nano-bot"
-```
-
-```js
-require("@ghom/nano-bot")
-```
-
-### 4. Code in TypeScript
-
-- Please use `Nano.Embed` class to make embeds.
-- Add your own modules in `src/modules/`.
-- Check the existing modules for examples.
-- The Discord client is in the `Nano.Globals` object as `client`.
-- The ApplicationClient is fetched in the `Nano.Globals` object as `bot`.
-
-### 5. Scripts explanation
-
-```json5
-{
-  // Prettify the code automatically on build or push action.
-  prettier: "prettier src --write",
-
-  // Create the local "dist" runnable folder for deployment.
-  build: "git rm -r --ignore-unmatch -f ./dist && npm run prettier && tsc",
-
-  // Build and start directly the bot for debugging.
-  start: "npm run build && node .",
-}
-```
-
-## 6. Future features
-
-- Implement hot reloading with Gulp.
+Read the [API documentation](https://github.com/CamilleAbella/NanoDocs) to learn how to use Nano.
