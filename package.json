@@ -2,7 +2,7 @@
   "name": "@ghom/nano-bot",
   "author": "ghom",
   "license": "ISC",
-  "version": "v1.10.14-beta",
+  "version": "v1.10.15-beta",
   "description": "Discord bot core in TypeScript.",
   "main": "dist/index.js",
   "prettier": {
@@ -16,7 +16,7 @@
     "prettier": "prettier src scripts package.json assets/schemas/nano.config.schema.json assets/schemas/nano.module.schema.json readme.md tsconfig.json --write",
     "build": "git rm -r --ignore-unmatch -f ./dist && npm run prettier && tsc",
     "precommit": "node scripts/pre-commit && npm run prettier && git add *",
-    "commit": "git commit -m \"patch core to v1.10.14-beta\"",
+    "commit": "git commit -m \"patch core to v1.10.15-beta\"",
     "push": "npm run commit && git push origin master"
   },
   "keywords": [
