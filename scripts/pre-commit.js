@@ -35,7 +35,7 @@ async function updateReadme() {
 
   const newDeps = Object.keys(PACKAGE.dependencies)
     .map((dep) => {
-      return `![${dep}](https://img.shields.io/github/package-json/dependency-version/CamilleAbella/Nano/${dep}?color=orange&style=plastic)`
+      return `![${dep}](https://img.shields.io/github/package-json/dependency-version/NanoWorkspace/core/${dep}?color=orange&style=plastic)`
     })
     .join("\n")
 
