@@ -5,6 +5,8 @@ import Embed from "../app/Embed"
 import Types from "../utils/ArgumentTypes"
 import Text from "../utils/Text"
 
+// todo: make a Standart module with the help command and some other modules (like Paginator)
+
 new Command({
   id: "help",
   name: "Help Menu",

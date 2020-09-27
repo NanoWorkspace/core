@@ -4,7 +4,6 @@ import Utils from "./app/Utils"
 import Command from "./app/Command"
 import Event from "./app/Event"
 import Embed from "./app/Embed"
-import Paginator from "./app/Paginator"
 import Logger from "./app/Logger"
 
 dotenv.config({ path: Utils.Path.root("..", ".env") })
@@ -22,7 +21,6 @@ export interface NanoExports {
   Command: typeof Command
   Event: typeof Event
   Embed: typeof Embed
-  Paginator: typeof Paginator
   Logger: typeof Logger
 }
 
@@ -32,7 +30,6 @@ const Nano: NanoExports = {
   Command,
   Event,
   Embed,
-  Paginator,
   Logger,
 }
 
