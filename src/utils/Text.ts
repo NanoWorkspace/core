@@ -7,8 +7,8 @@ export function improvePattern(pattern: RegExp): RegExp {
 }
 
 export interface NanoText {
-  improvePattern: (pattern: RegExp) => RegExp
-  code: (text: string, lang?: string) => string
+  improvePattern: typeof improvePattern
+  code: typeof code
 }
 
 const Text: NanoText = {

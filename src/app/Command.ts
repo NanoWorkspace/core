@@ -1,47 +1,17 @@
 import Discord from "discord.js"
 import Logger from "./Logger"
 import Text from "../utils/Text"
-import ArgumentTypes from "../utils/ArgumentTypes"
 
 Logger.load("file", __filename)
-
-/** Command category. To edit categories, edit the `CommandCategories` interface and the `commandCategories` object in `src/app/Command.ts` */
-export type CommandCategoryName = keyof CommandCategories
-
-/** As { name: CommandCategory } */
-export interface CommandCategories {
-  general: CommandCategory
-  admin: CommandCategory
-  mod: CommandCategory
-}
-
-/** Command categories */
-export const commandCategories: CommandCategories = {
-  general: {
-    title: "General",
-    description: "",
-  },
-  admin: {
-    title: "Administration",
-    description: "",
-  },
-  mod: {
-    title: "Moderation",
-    description: "",
-  },
-}
-
-export interface CommandCategory {
-  title: string
-  description: string
-}
 
 export interface CommandOptions {
   /** Help-menu name of command (organic title, not a slug or a camelCase). */
   name: string
+  /** Identifier of command (camelCases) */
+  id: string
   /** All of the command aliases are inside this regex. */
   pattern: RegExp
-  category?: CommandCategoryName
+  category?: string
   /** Can be used only by bot owners ? */
   botOwner?: true
   /** Can be used only by guild owner ? */
@@ -50,6 +20,7 @@ export interface CommandOptions {
   admin?: true
   /** Can be used only by moderators, admins and guild owner ? */
   moderator?: true
+  nsfw?: true
   permissions?: Discord.PermissionResolvable[]
   botPermissions?: Discord.PermissionResolvable[]
   users?: Discord.UserResolvable[]
@@ -126,9 +97,6 @@ export default class Command {
     string,
     Command
   > = new Discord.Collection()
-
-  static categories = commandCategories
-  static types = ArgumentTypes
 
   public readonly originalPattern: RegExp
 

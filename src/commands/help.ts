@@ -6,6 +6,7 @@ import Types from "../utils/ArgumentTypes"
 import Text from "../utils/Text"
 
 new Command({
+  id: "help",
   name: "Help Menu",
   pattern: /h(?:[aeu]?lp)?/i,
   category: "general",
@@ -15,6 +16,8 @@ new Command({
     const command: Command = args.command
 
     const embed = new Embed()
+
+    // todo: use Paginator
 
     if (!command) {
       embed.setTitle("Commandes").addFields(

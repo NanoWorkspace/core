@@ -10,7 +10,7 @@ export function root(...pathSegments: string[]): string {
 }
 
 export interface NanoPath {
-  root: (...pathSegments: string[]) => string
+  root: typeof root
 }
 
 const Path: NanoPath = {

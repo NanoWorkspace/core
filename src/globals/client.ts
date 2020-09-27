@@ -26,19 +26,26 @@ client.once("ready", async () => {
     (filePath) => {
       if (filePath.endsWith("dist/index.js")) require(filePath)
     },
-    /^(?:node_modules|src)$/i
+    {
+      ignore: /^(?:node_modules|src)$/i,
+      recursive: true,
+    }
   )
 
-  // todo remove handlers for commands and events
   await File.forEachFile(
     [
       path.join(__dirname, "..", "events"),
       path.join(__dirname, "..", "commands"),
+      path.join(__dirname, "..", "argumentTypes"),
       Path.root("events"),
       Path.root("commands"),
+      Path.root("argumentTypes"),
     ],
     (filePath) => {
       if (filePath.endsWith(".js")) require(filePath)
+    },
+    {
+      recursive: true,
     }
   )
 

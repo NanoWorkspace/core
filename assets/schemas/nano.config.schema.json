@@ -97,6 +97,11 @@
       "description": "Run as debug mode for development. (or put it in .env file)",
       "type": "boolean"
     },
+    "lang": {
+      "description": "The default locale code of bot. (default: en)",
+      "type": "string",
+      "default": "en"
+    },
     "token": {
       "description": "The Discord API token of your bot. (or put it in .env file)",
       "type": "string"

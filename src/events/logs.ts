@@ -55,6 +55,14 @@ new Event({
       )
     }
 
-    Logger.ready()
+    Logger.space()
+
+    console.log(
+      chalk.green("ready"),
+      "Try me with the",
+      chalk.magentaBright(`${Globals.bot.prefix}help`),
+      "command!",
+      chalk.blueBright(`[ lang: ${Globals.bot.locale} ]`)
+    )
   },
 })

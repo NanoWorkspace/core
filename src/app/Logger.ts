@@ -1,9 +1,6 @@
 import chalk from "chalk"
-import Path from "../utils/Path"
 
 // todo: allow custom template for logs
-
-const config = require(Path.root("..", "nano.config.json"))
 
 abstract class Logger {
   static space() {
@@ -52,16 +49,6 @@ abstract class Logger {
       chalk.blackBright.bgRed.bold(" " + err.name + " "),
       chalk.redBright(err.message),
       ...args
-    )
-  }
-
-  static ready() {
-    this.space()
-    console.log(
-      chalk.green("ready"),
-      "Try me with the",
-      chalk.magentaBright(`${config.prefix}help`),
-      "command!"
     )
   }
 }
